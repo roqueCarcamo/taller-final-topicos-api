@@ -13,7 +13,8 @@ const auth = require('./../auth');
 
 router.route('/')
     .get(controller.all)
-    .post(auth, controller.create)
+    .post(controller.create)
+    
 
 router.param('id', controller.find)
 
@@ -21,5 +22,8 @@ router.route('/:id')
     .get(controller.get)
     .put(controller.update)
     .delete(controller.delete)
+    
+router.route('/:id/answer')
+    .post(controller.addAnswers)
 
 module.exports = router;

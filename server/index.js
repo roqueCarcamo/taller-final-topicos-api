@@ -13,8 +13,7 @@ app.use(bodyParser.json());
 
 app.use(cors({
     origin: config.cors.origin,
-    credentials: Boolean(config.cors.credentials),
-    methods: ['GET', 'POST', 'OPTIONS']
+    credentials: Boolean(config.cors.credentials)
 }));
 
 const api = require('./api/v1');

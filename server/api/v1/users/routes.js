@@ -4,10 +4,13 @@ const controller = require('./controller');
 const auth = require('./../auth');
 
 /*
+ * /api/users           GET  - LIST USER
  * /api/users/signup    POST - SIGNUP
  * /api/users/login     POST - LOGIN
- * /api/users/profile   GET  - PROFILE
  */
+
+router.route('/')
+    .get(controller.all)
 
 router.route('/signup')
     .post(controller.create)
@@ -15,7 +18,4 @@ router.route('/signup')
 router.route('/login')
     .post(controller.login)
     
-router.route('/profile')
-    .get(auth, controller.profile)
-
 module.exports = router;

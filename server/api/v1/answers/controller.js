@@ -1,5 +1,6 @@
 const Model = require('./model');
 
+
 exports.find = (req, res, next, id) => {
     Model.findById(id)
         .then( doc => {
@@ -17,6 +18,50 @@ exports.find = (req, res, next, id) => {
         });
 };
 
+/**
+ * @api {get} /answers List Answers
+ * @apiName GetAnswer
+ * @apiGroup Answer
+ *
+ * @apiSuccess {String} _id         unique ID of the Answer.
+ * @apiSuccess {String} text        Text.
+ * @apiSuccess {String} user        unique ID of the User.
+ * @apiSuccess {String} createdAt   Created date of the Answer.
+ * @apiSuccess {String} updateAt    Last update date of the Answers.
+ *
+ * @apiSuccessExample Success-Response:
+ *     HTTP/1.1 200 OK
+ *{
+ *    "data": [
+ *        {
+ *           "_id": "5a776c212bde8e12030cca7d",
+ *           "text": "Respuesta 1",
+ *           "user": {
+ *               "firstname": "Rodolfo",
+ *               "lastname": "Carcamo",
+ *               "email": "rodo@gmail.com",
+ *               "createdAt": "2018-02-04T20:03:27.398Z",
+ *               "updatedAt": "2018-02-04T20:03:27.398Z",
+ *               "__v": 0
+ *           },
+ *           "createdAt": "2018-02-04T20:25:05.246Z",
+ *           "updatedAt": "2018-02-04T20:25:05.246Z",
+ *           "__v": 0
+ *       }
+ *   ],
+ *   "limit": 10,
+ *   "skip": 0,
+ *    "count": 1
+ *}
+ *
+ * @apiError Document Not Found the id of the Answer was not found.
+ *
+ * @apiErrorExample Error-Response:
+ *     HTTP/1.1 404 Not Found
+ *     {
+ *       "error": "Document Not Found"
+ *     }
+ */
 exports.all = (req, res, next) => {
     const limit = Number(req.query.limit) || 10;
     const skip = Number(req.query.skip) || 0;
@@ -43,6 +88,38 @@ exports.all = (req, res, next) => {
         });
 };
 
+/**
+ * @api {post} /answers Create Answer
+ * @apiName PostAnswer
+ * @apiGroup Answer
+ *
+ * @apiParam {String} id Answer unique ID.
+ *
+ * @apiSuccess {String} _id         unique ID of the Answer.
+ * @apiSuccess {String} text        Text.
+ * @apiSuccess {String} user        unique ID of the User.
+ * @apiSuccess {String} createdAt   Created date of the Answer.
+ * @apiSuccess {String} updateAt    Last update date of the Answer.
+ *
+ * @apiSuccessExample Success-Response:
+ *     HTTP/1.1 200 OK
+ *{
+ *   "_id": "5a776c212bde8e12030cca7d",
+ *   "text": "Respuesta 1",
+ *   "user": "5a77670f2bde8e12030cca7c",
+ *   "createdAt": "2018-02-04T20:25:05.246Z",
+ *   "updatedAt": "2018-02-04T20:25:05.246Z",
+ *   "__v": 0
+ *}
+ *
+ * @apiError Document Not Found the id of the Answer was not found.
+ *
+ * @apiErrorExample Error-Response:
+ *     HTTP/1.1 404 Not Found
+ *     {
+ *       "error": "Document Not Found"
+ *     }
+ */
 exports.create = (req, res, next) => {
     const body = req.body;
     
@@ -60,39 +137,30 @@ exports.create = (req, res, next) => {
 };
 
 /**
- * @api {get} /books/:id Request Book information
- * @apiName GetBook
- * @apiGroup Book
+ * @api {get} /answers/:id Get Answer Id
+ * @apiName GetAnsweId
+ * @apiGroup Answer
  *
- * @apiParam {String} id Book unique ID.
+ * @apiParam {String} id Answer unique ID.
  *
- * @apiSuccess {String} _id         unique ID of the Book.
- * @apiSuccess {String} title       Title.
- * @apiSuccess {String} description Description.
- * @apiSuccess {String} author      Author of the book.
- * @apiSuccess {String} createdAt   Created date of the book.
- * @apiSuccess {String} updateAt    Last update date of the book.
+ * @apiSuccess {String} _id         unique ID of the Answer.
+ * @apiSuccess {String} text        Text.
+ * @apiSuccess {String} user        unique ID of the User.
+ * @apiSuccess {String} createdAt   Created date of the Answer.
+ * @apiSuccess {String} updateAt    Last update date of the Answer.
  *
  * @apiSuccessExample Success-Response:
  *     HTTP/1.1 200 OK
- *     {
- *          "_id": "5a63985872e840361145d634",
- *          "title": "Go girl",
- *          "description": "Originally writed by Gillian Flynn",
- *          "author": {
- *              "_id": "5a63929672e840361145d633",
- *              "firstname": "Gustavo",
- *              "lastname": "Morales",
- *              "createdAt": "2018-01-20T19:03:50.638Z",
- *              "updatedAt": "2018-01-20T19:03:50.638Z",
- *              "__v": 0
- *          },
- *          "createdAt": "2018-01-20T19:28:24.046Z",
- *          "updatedAt": "2018-01-20T19:28:24.046Z",
- *          "__v": 0
- *      },
+ *{
+ *   "_id": "5a776c212bde8e12030cca7d",
+ *   "text": "Respuesta 1",
+ *   "user": "5a77670f2bde8e12030cca7c",
+ *   "createdAt": "2018-02-04T20:25:05.246Z",
+ *   "updatedAt": "2018-02-04T20:25:05.246Z",
+ *   "__v": 0
+ *}
  *
- * @apiError Document Not Found the id of the Book was not found.
+ * @apiError Document Not Found the id of the Answer was not found.
  *
  * @apiErrorExample Error-Response:
  *     HTTP/1.1 404 Not Found
@@ -100,11 +168,42 @@ exports.create = (req, res, next) => {
  *       "error": "Document Not Found"
  *     }
  */
-
 exports.get = (req, res, next) => {
     res.json(req.doc);
 };
 
+/**
+ * @api {put} /answers/:id Update Answer
+ * @apiName PutAnswer
+ * @apiGroup Answer
+ *
+ * @apiParam {String} id Answer unique ID.
+ *
+ * @apiSuccess {String} _id         unique ID of the Answer.
+ * @apiSuccess {String} text        Text.
+ * @apiSuccess {String} user        unique ID of the User.
+ * @apiSuccess {String} createdAt   Created date of the Answer.
+ * @apiSuccess {String} updateAt    Last update date of the Answer.
+ *
+ * @apiSuccessExample Success-Response:
+ *     HTTP/1.1 200 OK
+ *{
+ *   "_id": "5a776c212bde8e12030cca7d",
+ *   "text": "Respuesta 1",
+ *   "user": "5a77670f2bde8e12030cca7c",
+ *   "createdAt": "2018-02-04T20:25:05.246Z",
+ *   "updatedAt": "2018-02-04T20:25:05.246Z",
+ *   "__v": 0
+ *}
+ *
+ * @apiError Document Not Found the id of the Answer was not found.
+ *
+ * @apiErrorExample Error-Response:
+ *     HTTP/1.1 404 Not Found
+ *     {
+ *       "error": "Document Not Found"
+ *     }
+ */
 exports.update = (req, res, next) => {
     let document = Object.assign(req.doc, req.body);
     
@@ -117,6 +216,38 @@ exports.update = (req, res, next) => {
         });
 };
 
+/**
+ * @api {delete} /answers/:id Delete Answer
+ * @apiName DeleteAnswer
+ * @apiGroup Answer
+ *
+ * @apiParam {String} id Answer unique ID.
+ *
+ * @apiSuccess {String} _id         unique ID of the Answer.
+ * @apiSuccess {String} text        Text.
+ * @apiSuccess {String} user        unique ID of the User.
+ * @apiSuccess {String} createdAt   Created date of the Answer.
+ * @apiSuccess {String} updateAt    Last update date of the Answer.
+ *
+ * @apiSuccessExample Success-Response:
+ *     HTTP/1.1 200 OK
+ *{
+ *   "_id": "5a776c212bde8e12030cca7d",
+ *   "text": "Respuesta 1",
+ *   "user": "5a77670f2bde8e12030cca7c",
+ *   "createdAt": "2018-02-04T20:25:05.246Z",
+ *   "updatedAt": "2018-02-04T20:25:05.246Z",
+ *   "__v": 0
+ *}
+ *
+ * @apiError Document Not Found the id of the Answer was not found.
+ *
+ * @apiErrorExample Error-Response:
+ *     HTTP/1.1 404 Not Found
+ *     {
+ *       "error": "Document Not Found"
+ *     }
+ */
 exports.delete = (req, res, next) => {
     const doc = req.doc;
     

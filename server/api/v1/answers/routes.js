@@ -13,7 +13,7 @@ const auth = require('./../auth');
 
 router.route('/')
     .get(controller.all)
-    .post(auth, controller.create)
+    .post(controller.create)
 
 router.param('id', controller.find)
 

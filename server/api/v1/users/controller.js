@@ -6,6 +6,9 @@ const Model = require('./model');
  * @api {get} /users List Users
  * @apiName GetUser
  * @apiGroup User
+ * 
+ * @apiParam {String} limit Limit
+ * @apiParam {String} skip Skip
  *
  *
  * @apiSuccess {String} firstname   Firstname.
@@ -70,8 +73,13 @@ exports.all = (req, res, next) => {
  * @apiName SignupUser
  * @apiGroup User
  *
+ * @apiParam {String} firstname Firstname
+ * @apiParam {String} lastname  Lastname
+ * @apiParam {String} email     Email
+ * @apiParam {String} password  Password
+ * 
  *
- * @apiSuccess {String} firstname  Firstname
+ * @apiSuccess {String} firstname  Firstname.
  * @apiSuccess {String} lastname   Lastname.
  * @apiSuccess {String} email      Email.
  * @apiSuccess {String} createdAt  Created date of the Answers.
@@ -135,7 +143,8 @@ exports.create = (req, res, next) => {
  * @apiName PostLogin
  * @apiGroup User
  *
- * @apiParam {String} id User unique ID.
+ * @apiParam {String} email Email
+ * @apiParam {String} password Password
  *
  * @apiSuccess {String} firstname  Firstname
  * @apiSuccess {String} lastname   Lastname.
@@ -198,6 +207,22 @@ exports.login = (req, res, next) => {
                         }
                     }
                 });
+            }else{
+                res.status(404).json({
+                    message: "Document not found"
+                });
+            }
+        })
+        .catch( err => {
+            next(new Error(err));
+        });
+};
+
+exports.profile = (req, res, next) => {
+    Model.findById(req.decoded._id)
+        .then( doc => {
+            if(doc){
+               res.json(doc);
             }else{
                 res.status(404).json({
                     message: "Document not found"

@@ -22,6 +22,9 @@ exports.find = (req, res, next, id) => {
  * @api {get} /answers List Answers
  * @apiName GetAnswer
  * @apiGroup Answer
+ * 
+ * @apiParam {String} limit limit
+ * @apiParam {String} skip skip
  *
  * @apiSuccess {String} _id         unique ID of the Answer.
  * @apiSuccess {String} text        Text.
@@ -93,7 +96,8 @@ exports.all = (req, res, next) => {
  * @apiName PostAnswer
  * @apiGroup Answer
  *
- * @apiParam {String} id Answer unique ID.
+ * @apiParam {String} text Text.
+ * @apiParam {String} user unique ID of the User.
  *
  * @apiSuccess {String} _id         unique ID of the Answer.
  * @apiSuccess {String} text        Text.
@@ -178,6 +182,8 @@ exports.get = (req, res, next) => {
  * @apiGroup Answer
  *
  * @apiParam {String} id Answer unique ID.
+ * @apiParam {String} text text.
+ * @apiParam {String} user User unique ID.
  *
  * @apiSuccess {String} _id         unique ID of the Answer.
  * @apiSuccess {String} text        Text.

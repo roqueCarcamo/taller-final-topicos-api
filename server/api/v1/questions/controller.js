@@ -22,7 +22,8 @@ exports.find = (req, res, next, id) => {
  * @apiName GetQuestion
  * @apiGroup Question
  *
- * @apiParam {String} id Question unique ID.
+ * @apiParam {String} limit Limit
+ * @apiParam {String} skip Skip
  *
  * @apiSuccess {String} _id         unique ID of the Question.
  * @apiSuccess {String} text        Text.
@@ -80,10 +81,16 @@ exports.all = (req, res, next) => {
     
     const items = Model
         .find()
+        .sort({createdAt:-1})
         .skip(skip)
         .limit(limit)
         .populate('user')
-        .populate('answer');
+        .populate('answer')
+        .populate({
+            path: 'answer',
+            // Get friends of friends - populate the 'friends' array for every friend
+            populate: { path: 'user' }
+        });
     
     const count = Model.count();
     
@@ -105,6 +112,11 @@ exports.all = (req, res, next) => {
  * @api {post} /questions Create Question
  * @apiName PostQuestion
  * @apiGroup Question
+ * 
+ * 
+ * @apiParam {String} text Text
+ * @apiParam {String} user unique ID of the User.
+ * 
  *
  * @apiSuccess {Array} answer       Array of the answer.
  * @apiSuccess {String} _id         unique ID of the Question.
@@ -138,7 +150,7 @@ exports.create = (req, res, next) => {
     
     let document = new Model({
         text: body.text,
-        user: body.user
+        user: req.decoded._id
     });
     document.save()
         .then( doc => {
@@ -195,6 +207,8 @@ exports.get = (req, res, next) => {
  * @apiGroup Question
  *
  * @apiParam {String} id Question unique ID.
+ * @apiParam {String} text Text
+ * @apiParam {String} user unique ID of the User.
  *
  * @apiSuccess {String} _id         unique ID of the Question.
  * @apiSuccess {String} text        Text.
@@ -291,6 +305,8 @@ exports.delete = (req, res, next) => {
  * @apiGroup Question
  *
  * @apiParam {String} id Question unique ID.
+ * @apiParam {String} answer Answer unique ID.
+ * 
  *
  * @apiSuccess {String} _id         unique ID of the Question.
  * @apiSuccess {String} text        Text.

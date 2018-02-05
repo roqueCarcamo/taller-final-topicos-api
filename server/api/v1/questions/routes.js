@@ -4,26 +4,26 @@ const controller = require('./controller');
 const auth = require('./../auth');
 
 /*
- * /api/books/     GET    - READ ALL
- * /api/books/     POST   - CREATE
- * /api/books/:id  GET    - READ ONE
- * /api/books/:id  PUT    - UPDATE
- * /api/books/:id  DELETE - DELETE
+ * /api/questions/     GET    - READ ALL
+ * /api/questions/     POST   - CREATE
+ * /api/questions/:id  GET    - READ ONE
+ * /api/questions/:id  PUT    - UPDATE
+ * /api/questions/:id  DELETE - DELETE
  */
 
 router.route('/')
     .get(controller.all)
-    .post(controller.create)
+    .post(auth, controller.create)
     
 
 router.param('id', controller.find)
 
 router.route('/:id')
     .get(controller.get)
-    .put(controller.update)
-    .delete(controller.delete)
+    .put(auth, controller.update)
+    .delete(auth, controller.delete)
     
 router.route('/:id/answer')
-    .post(controller.addAnswers)
+    .post(auth, controller.addAnswers)
 
 module.exports = router;

@@ -202,9 +202,11 @@ exports.get = (req, res, next) => {
 };
 
  /**
- * @api {put} /questions/:id Update Question
+ * @api {post} /questions/:id Update Question
  * @apiName PutQuestion
  * @apiGroup Question
+ * 
+ * * @apiDescription Solo el autor de la pregunta podrá editarla.
  *
  * @apiParam {String} id Question unique ID.
  * @apiParam {String} text Text
@@ -259,10 +261,12 @@ exports.update = (req, res, next) => {
 };
 
  /**
- * @api {delete} /questions/:id Delete Question
+ * @api {post} /questions/:id/delete Delete Question
  * @apiName DeleteQuestion
  * @apiGroup Question
- *
+ * 
+ * @apiDescription Solo el autor de la pregunta podrá borrarla.
+ * 
  * @apiParam {String} id Question unique ID.
  *
  * @apiSuccess {String} _id         unique ID of the Question.

@@ -242,13 +242,20 @@ exports.get = (req, res, next) => {
 exports.update = (req, res, next) => {
     let document = Object.assign(req.doc, req.body);
     
-    document.save()
+    const doc_object = req.doc.toObject();
+    const id = doc_object.user.toHexString();
+    
+    if (req.decoded._id == id) {
+        document.save()
         .then(doc => {
             res.json(doc);
         })
         .catch(err => {
            next(new Error(err));
         });
+    } else {
+         next(new Error('Esta pregunta no fue creada por ti.'));
+    }
 };
 
  /**
@@ -289,14 +296,19 @@ exports.update = (req, res, next) => {
  */
 exports.delete = (req, res, next) => {
     const doc = req.doc;
-    
-    doc.remove()
+    const doc_object = req.doc.toObject();
+    const id = doc_object.user.toHexString();
+    if (req.decoded._id == id) {
+        doc.remove()
         .then( deleted => {
             res.json(deleted);
         })
         .catch( err => {
             next(new Error(err));
         });
+    } else {
+         next(new Error('Esta pregunta no fue creada por ti.'));
+    }
 };
 
  /**

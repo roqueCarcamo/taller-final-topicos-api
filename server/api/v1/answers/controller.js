@@ -129,7 +129,7 @@ exports.create = (req, res, next) => {
     
     let document = new Model({
         text: body.text,
-        user: body.user
+        user: req.decoded._id
     });
     document.save()
         .then( doc => {

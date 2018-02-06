@@ -20,10 +20,15 @@ router.param('id', controller.find)
 
 router.route('/:id')
     .get(controller.get)
+    .post(auth, controller.update)
     .put(auth, controller.update)
     .delete(auth, controller.delete)
     
 router.route('/:id/answer')
     .post(auth, controller.addAnswers)
+
+// Se implemento de esta manera porque daba un error 499
+router.route('/:id/delete')
+    .post(auth, controller.delete)
 
 module.exports = router;

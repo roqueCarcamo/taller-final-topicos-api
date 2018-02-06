@@ -19,6 +19,6 @@ router.route('/login')
     .post(controller.login)
 
 router.route('/profile')
-    .get(auth,controller.profile)
+    .get(auth, controller.profile)
     
 module.exports = router;
